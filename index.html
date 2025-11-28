@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio - Guilherme Lumbela</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url('background do portifolio.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #ffffff; 
+  font-family: Arial, sans-serif;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+body.loaded { opacity: 1; }
+
+
+img {
+  opacity: 0;
+  animation: fadeIn 1.8s ease forwards;
+  max-width: 100%;
+  height: auto;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+
+.float-move {
+  animation: moveUpDown 4s ease-in-out infinite;
+}
+@keyframes moveUpDown {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+header {
+  display: flex;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(6px);
+}
+
+
+.openbtn {
+  font-size: 22px;
+  cursor: pointer;
+  background: rgba(10, 10, 40, 0.9);
+  color: #fff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+}
+.openbtn:hover { background: rgba(40, 0, 0, 0.6); }
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 15;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.85);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+.sidebar a {
+  padding: 12px 32px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+}
+.sidebar a:hover { background: rgba(0, 120, 255, 0.6); }
+
+
+.section {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  padding: 80px 20px 50px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 12px;
+  margin: 10px;
+}
+.section.active {
+  display: block;
+  opacity: 1;
+}
+
+
+.foto-inicio {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 30px #0066ff;
+  animation: descidaSuave 1.5s ease forwards;
+  opacity: 0;
+}
+.foto-inicio.float-move {
+  animation: descidaSuave 1.5s ease forwards, moveUpDown 4s ease-in-out infinite;
+}
+
+@keyframes descidaSuave {
+  0% { transform: translateY(-60px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+
+.social-icons img {
+  width: 45px;
+  margin: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.social-icons img:hover { transform: scale(1.2); }
+
+
+
+.sobre-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.sobre-retangulo {
+  width: 100%;
+  max-width: 300px;
+  height: 380px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  border: 2px solid rgba(0,136,255,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.sobre-retangulo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  animation: none;
+}
+
+
+.sobre-texto {
+  max-width: 500px;
+  text-align: left;
+  font-size: 18px;
+  color: white;
+  padding: 0 15px;
+}
+
+
+.projeto-card {
+  width: 100%;
+  max-width: 280px;
+  background: rgba(0,0,0,0.65);
+  padding: 10px;
+  margin: 10px;
+  display: inline-block;
+  border-radius: 10px;
+  color: white;
+  transition: 0.3s;
+}
+.projeto-card:hover { transform: scale(1.05); }
+
+.projeto-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+.carrossel {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  margin: 20px auto;
+  background: #000;
+}
+
+.imagens {
+  display: flex;
+  width: 400%;
+  animation: deslizar 16s infinite ease-in-out;
+}
+
+.imagens img {
+  width: 25%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+@keyframes deslizar {
+  0%, 20% { transform: translateX(0); }
+  25%, 45% { transform: translateX(-25%); }
+  50%, 70% { transform: translateX(-50%); }
+  75%, 95% { transform: translateX(-75%); }
+  100% { transform: translateX(0); }
+}
+
+
+.hab-container {
+  width: 100%;
+  max-width: 550px;
+  background: rgba(0,0,0,0.6);
+  padding: 20px;
+  margin: auto;
+  border-radius: 10px;
+  color: white;
+}
+.hab-item { margin-bottom: 22px; font-size: 18px; text-align: left; }
+.barra { width: 100%; height: 10px; background: #222; border-radius: 5px; }
+.progresso { height: 10px; border-radius: 5px; transition: width 1s ease; }
+
+.html { background:#ff4500; width:90%; }
+.css { background:#0066ff; width:80%; }
+.js { background:#f0db4f; width:60%; }
+.redes { background:#00cc66; width:95%; }
+
+
+.serv-card {
+  width: 100%;
+  max-width: 260px;
+  background: rgba(0,0,0,0.65);
+  display: inline-block;
+  margin: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+  transition: 0.3s;
+}
+.serv-card:hover { transform: scale(1.05); }
+.serv-card img {
+  width: 100%;
+  height: 250px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+
+.hobby-card {
+  width: 100%;
+  max-width: 260px;
+  background: rgba(0,0,0,0.65);
+  padding: 10px;
+  display: inline-block;
+  border-radius: 10px;
+  margin: 10px;
+  transition: .3s;
+  color: white;
+  cursor: pointer;
+}
+.hobby-card:hover { transform: scale(1.05); }
+.hobby-card img { width: 100%; height: 180px; border-radius: 10px; object-fit: cover; }
+
+
+form {
+  background: rgba(0,0,0,0.75);
+  width: 100%;
+  max-width: 350px;
+  padding: 20px;
+  margin: 0 auto;
+  border-radius: 10px;
+  color: white;
+}
+form input, form textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+form button {
+  background: #0099ff;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+form button:hover { background: #0077cc; }
+
+footer {
+  margin-top: 40px;
+  padding: 20px;
+  background: rgba(11,11,20,0.6);
+  text-align: center;
+  color: white;
+}
+
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 15px 30px;
+  }
+  
+  .sobre-layout {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .sobre-texto {
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  .sobre-retangulo {
+    height: 300px;
+  }
+  
+  .hab-container { 
+    width: 95%; 
+    padding: 15px;
+  }
+  
+  .projeto-card, .serv-card, .hobby-card { 
+    max-width: 100%;
+    width: 95%;
+    margin: 10px auto;
+  }
+  
+  .carrossel {
+    max-width: 95%;
+  }
+  
+  .foto-inicio {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .social-icons img {
+    width: 40px;
+    margin: 6px;
+  }
+  
+  h1 {
+    font-size: 1.8em;
+  }
+  
+  h2 {
+    font-size: 1.5em;
+  }
+  
+  form {
+    width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 50px 10px 20px;
+  }
+  
+  .foto-inicio {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .social-icons img {
+    width: 35px;
+    margin: 5px;
+  }
+  
+  h1 {
+    font-size: 1.5em;
+  }
+  
+  h2 {
+    font-size: 1.3em;
+  }
+  
+  .sobre-texto {
+    font-size: 14px;
+  }
+  
+  .hab-item {
+    font-size: 16px;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    padding: 6px 12px;
+  }
+  
+  .sidebar a {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <button class="openbtn" onclick="openNav()">☰</button>
+</header>
+
+<div id="mySidebar" class="sidebar">
+  <a onclick="closeNav()">✖ Fechar</a>
+  <a onclick="showSection('inicio')">Início</a>
+  <a onclick="showSection('sobre')">Sobre Mim</a>
+  <a onclick="showSection('projetos')">Projetos</a>
+  <a onclick="showSection('habilidades')">Habilidades</a>
+  <a onclick="showSection('servicos')">Serviços</a>
+  <a onclick="showSection('galeria')">Galeria</a>
+  <a onclick="showSection('hobbies')">Hobbies</a>
+  <a onclick="showSection('contatos')">Contactos</a>
+  <a href="SOBRE MIM.docx" download>📄 Baixar CV</a>
+</div>
+
+
+<div id="inicio" class="section active">
+  <img src="unnamed.jpg" class="foto-inicio float-move" alt="Guilherme Lumbela">
+
+  <h1>BEM-VINDO</h1>
+<p>   Óla eu sou o Guilherme Lumbela </p>
+  <div class="social-icons">
+    <a href="tel:+258864397734"><img src="Phone_icon.png" alt="Telefone"></a>
+    <a href="https://wa.me/258864397734"><img src="15707820.png" alt="WhatsApp"></a>
+    <a href="https://www.instagram.com/guilhermemlumbela"><img src="15707749.png" alt="Instagram"></a>
+    <a href="mailto:guilhermelumbela38@gmail.com"><img src="Gmail_Logo_512px.webp" alt="Email"></a>
+  </div>
+
+</div>
+
+
+<div id="sobre" class="section">
+  <h2>Sobre Mim</h2>
+
+  <div class="sobre-layout">
+
+    
+    <div class="sobre-retangulo">
+      <img src="Gemini_Generated_Image_268j3u268j3u268j.png" alt="Guilherme Lumbela">
+    </div>
+
+    
+    <div class="sobre-texto">
+      Sou <b>Guilherme Lumbela</b>, estudante de Administração de Redes,
+      Desenvolvimento Web e Reparação de Hardware. Apaixonado por tecnologia e sempre
+      à procura de evoluir. Trabalho com as mais recentes tecnologias para entregar soluções de alta 
+      qualidade. Como  Administrador de Redes, garanto infraestruturas seguras e eficientes, mantendo
+       sistemas operacionais e otimizados para o melhor desempenho.  Estou sempre buscando novos desafios
+        e oportunidades para crescer
+       profissionalmente e contribuir com projetos inovadores.
+    </div>
+  </div>
+</div>
+
+
+<div id="projetos" class="section">
+  <h2>Os Meus Projetos</h2>
+
+  <div class="projeto-card">
+    <img src="CFR TRABALHO.png" alt="Projeto de Rede">
+    <h3><b>Projeto de Rede</b></h3>
+    <p> Construção de uma rede no simulador da Cisco</p>
+  </div>
+
+  <div class="projeto-card">
+    <img src="IMG-20250820-WA0007.jpg" alt="Manutenção de Hardware">
+    <h3><b>Manutenção de Hardware</b></h3>
+    <p>Ferramentas para manunteção e reparo de um computador</p>
+  </div>
+
+  <div class="projeto-card">
+    <img src="IMG-20251016-WA0086.jpg" alt="Cablagem">
+    <h3><b>Cablagem</b></h3>
+    <p>Processo de cripagem dos fios no Patch Painel</p>    
+  </div>
+</div>
+
+
+<div id="habilidades" class="section">
+  <h2>Habilidades</h2>
+
+  <div class="hab-container">
+    <div class="hab-item">
+      HTML
+      <div class="barra"><div class="progresso html"></div></div>
+    </div>
+
+    <div class="hab-item">
+      CSS
+      <div class="barra"><div class="progresso css"></div></div>
+    </div>
+
+    <div class="hab-item">
+      JavaScript
+      <div class="barra"><div class="progresso js"></div></div>
+    </div>
+
+    <div class="hab-item">
+      Redes
+      <div class="barra"><div class="progresso redes"></div></div>
+    </div>
+  </div>
+</div>
+
+
+<div id="servicos" class="section">
+  <h2>Serviços</h2>
+
+  <div class="serv-card">
+    <img src="imagem_post_desenvolvimento_web.jpg" alt="Desenvolvimento Web">
+    <h3>Desenvolvimento Web</h3>
+    <p> Criação de websites modernos e responsivos. </p>
+  </div>
+
+  <div class="serv-card">
+    <img src="Redes.jpg" alt="Administração de Redes">
+    <h3>Administração de Redes</h3>
+    <p>Configuração, gestão e manutenção de redes LAN.</p>
+  </div>
+
+  <div class="serv-card">
+    <img src="reparo de hardware.png" alt="Reparação de Hardware">
+    <h3>Reparação de Hardware</h3>
+    <p>Manutenção e diagnóstico de computadores.</p>
+  </div>
+</div>
+
+
+<div id="galeria" class="section">
+  <h2>Galeria</h2>
+
+  <div class="carrossel">
+    <div class="imagens">
+      <img src="IMG-20230507-WA0021_085839.jpg" alt="Galeria 1">
+      <img src="IMG-20250903-WA0082.jpg" alt="Galeria 2">
+      <img src="IMG-20251011-WA0033.jpg" alt="Galeria 3">
+      <img src="IMG_20250617_103354.jpg" alt="Galeria 4">
+    </div>
+  </div>
+</div>
+
+
+<div id="hobbies" class="section">
+  <h2>Hobbies</h2>
+
+  <div class="hobby-card" onclick="window.open('O Outro Pé da Sereia - Mia Couto.pdf')">
+    <img src="81HbjVGZzGL.jpg" alt="Leitura">
+    <p>Leitura 📘</p>
+  </div>
+
+  <div class="hobby-card" onclick="window.open('https://youtu.be/Yv2VYhNdHk4?si=BwodmSnE-qxKHdXV')">
+    <img src="maxresdefault.jpg" alt="Automobilismo">
+    <p>Automobilismo 🚗 — Clique para ver vídeo</p>
+  </div>
+
+  <div class="hobby-card" onclick="window.open('20-All Caps.mp3')">
+    <img src="images 23.jpeg" alt="Música">
+    <p>🎵 Ouvir Música</p>
+  </div>
+</div>
+
+
+<div id="contatos" class="section">
+  <h2>Contacte-me</h2>
+
+  <form action="mailto:guilhermelumbela38@gmail.com" method="POST">
+    <input type="text" name="nome" placeholder="O seu nome" required>
+    <input type="email" name="email" placeholder="O seu email" required>
+    <textarea name="mensagem" rows="4" placeholder="A sua mensagem"></textarea>
+    <button type="submit">Enviar</button>
+  </form>
+</div>
+
+<footer>
+  © 2025 | Guilherme Lumbela
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function openNav(){ document.getElementById("mySidebar").style.width = "250px"; }
+function closeNav(){ document.getElementById("mySidebar").style.width = "0"; }
+
+function showSection(id){
+  closeNav();
+  document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+  setTimeout(()=>{ document.getElementById(id).classList.add("active"); }, 200);
+}
+
+window.onload = () => {
+  document.body.classList.add('loaded');
+};
+</script>
+
+</body>
+</html>
